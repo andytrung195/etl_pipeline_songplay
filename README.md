@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #Songplay Analysis
 
 ##Purpose of this database
@@ -26,7 +25,3 @@ Run **sql_queries.py => create_tables.py => etl.py**
 2.song_data file: all songs information(title, artist,...)
 
 
-
-=======
-# etl_pipeline_songplay
->>>>>>> origin/main

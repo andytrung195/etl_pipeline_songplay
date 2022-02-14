@@ -25,4 +25,3 @@ Run **sql_queries.py => create_tables.py => etl.py**
 2.song_data file: all songs information(title, artist,...)
 
 
-
