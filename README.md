@@ -25,3 +25,9 @@ Run **sql_queries.py => create_tables.py => etl.py**
 2.song_data file: all songs information(title, artist,...)
 
 
+##Explaination of the files :
+1. sql_queries.py   : containing sql queries 
+2. create_table.py  : drop table and create table functions
+3. etl.ipynb        : developing single file. working with song data and log data , get information and insert into tables 
+4. etl.py           : same as etl.ipynb but processing with multiple file
+5. test.ipynb       : file to check database

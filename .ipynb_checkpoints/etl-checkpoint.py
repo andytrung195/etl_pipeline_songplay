@@ -6,6 +6,18 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
+    '''
+    Reads song files in song filepath.
+    Inserts song records into songs table
+    Inserts artist records into artists table
+    
+            Parameters:
+                cur (class)     : cursor of postgresql database
+                filepath(string): path of song files
+            
+            Returns: 
+                None
+    '''
     # open song file
     df = pd.read_json(filepath, lines=True)
 
@@ -22,6 +34,20 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
+    '''
+    Reads Log files in log filepath
+    Gets all logs having nextSong action
+    Gets timestamp, hour, day, week, month, year, weekday and inserts into time table
+    Gets user data and insert into users table
+    Queries artist_id and song_id  and insert information into songplay table
+    
+            Parameters:
+                cur (class)     : cursor of postgresql database
+                filepath(string): path of log files
+            
+            Returns: 
+                None
+    '''
     # open log file
     df = pd.read_json(filepath, lines=True) 
 
@@ -60,11 +86,21 @@ def process_log_file(cur, filepath):
             songid, artistid = None, None
 
         # insert songplay record
-        songplay_data = (index, row.userId, songid, artistid, row.sessionId, pd.to_datetime(row.ts,unit='ms'), row.level, row.location, row.userAgent)
+        songplay_data = (row.userId, songid, artistid, row.sessionId, pd.to_datetime(row.ts,unit='ms'), row.level, row.location, row.userAgent)
         cur.execute(songplay_table_insert, songplay_data)
 
 
 def process_data(cur, conn, filepath, func):
+    '''
+    Walks through each file path in folder
+    Prints out processing file number
+    
+            Parameters:
+                cur(class)        :cursor of postgresql
+                conn(class)       :connection of postgresql   
+                filepath(string)  :filepath
+                func(function)    :read song file or log file
+    '''
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -84,6 +120,16 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
+    '''
+    main function
+    
+    - connect to dadabase
+    - get cursor
+    - run song file process
+    - run log file process
+    - close connection
+    
+    '''
     conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
 
